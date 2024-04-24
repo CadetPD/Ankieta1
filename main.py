@@ -51,7 +51,7 @@ def home():
             error = "Nie udało się uzyskać informacji o IP."
             return render_template('home.html', error=error)
 
-        if ip_details['security']['vpn'] is True or ip_details['security']['proxy'] is True or ip_details['security']['tor'] is True:
+        if ip_details['security']['vpn'] or ip_details['security']['proxy'] or ip_details['security']['tor']:
             return "Korzystasz z VPN/proxy/TOR. Nie możesz zagłosować w tej ankiecie. Jeżeli chcesz zagłosować - wyłącz VPN/proxy/TOR."
 
         user_agent = request.user_agent.string
@@ -61,11 +61,12 @@ def home():
         recent_vote = Vote.query.filter(
             Vote.ip_address == ip,
             Vote.timestamp > datetime.utcnow() - timedelta(hours=24)
-        ).first()
+        ).order_by(Vote.timestamp.desc()).first()
 
         if recent_vote:
-            return "Już mam Twój głos ;) Zapraszam później"
-        
+            next_vote_time = recent_vote.timestamp + timedelta(hours=24)
+            return f"Już mam Twój głos ;) Możesz zagłosować ponownie {next_vote_time.strftime('%Y-%m-%d %H:%M:%S')}."
+
         country = ip_details['location'].get('country', 'Unknown')
         city = ip_details['location'].get('city', 'Unknown')
         vpn = ip_details['security'].get('vpn', 'Unknown')
@@ -79,6 +80,7 @@ def home():
         return redirect(url_for('thanks'))
 
     return render_template('home.html', error=error)
+
 
 @app.route('/thanks')
 def thanks():
