@@ -2,7 +2,65 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ankieta Wyborcza</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        fieldset {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Dodajemy responsywność */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            button {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Ankieta Wyborcza</h1>
